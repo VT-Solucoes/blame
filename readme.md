@@ -17,7 +17,7 @@ This package requires PHP 7.1.3 or higher, `illuminate/support@^5.7`, and `illum
 Via Composer:
 
 ```bash
-composer require dbt/model-factory
+composer require dbt/blame
 ``` 
 
 ### Testing
@@ -30,59 +30,17 @@ composer test
 
 ## Usage
 
-Publish the `model-factory.php` configuration file with `php artisan vendor:publish` command, or copy the file from this repository. The service provider should be auto-discovered by Laravel.
+Publish the `blame.php` configuration file with the `php artisan vendor:publish` command, or copy the file from this repository. The service provider should be auto-discovered.
 
-A model factory looks like this:
-
-```php
-use Dbt\ModelFactory\ModelFactory;
-
-class MyModelFactory extends ModelFactory
-{
-    protected $model = MyModel::class;
-
-    /**
-     * This is the main factory definition.
-     * @return array
-     */
-    public function definition (): array
-    {
-        return [
-            'my_string_column' => $this->faker->name,
-        ];
-    }
-
-    /**
-     * This is a factory state.
-     * @return array
-     */
-    public function myState (): array
-    {
-        return [
-            'my_int_column' => rand(1, 10),
-        ];
-    }
-}
-```
-
-To register your model factory, include it in the config file:
+In your configuration file, add the models you wish to observe:
 
 ```php
-'classes' => [
-    // ...
-    MyModelFactory::class,
-];
+    'models' => [
+        App\MyModel::class
+    ],
 ```
 
-Then you can use it as usual:
-
-```php
-// Factory without state.
-$base = factory(MyModel::class)->create();
-
-// Factory with state.
-$state = factory(MyModel::class)->states('myState')->create();
-```
+You can also use the config file to customize the column names and swap out the observer if you wish.
 
 ### License
 
