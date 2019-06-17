@@ -21,21 +21,21 @@ class Observer
         $this->auth = $auth;
     }
 
-    public function creating (Model $model)
+    public function creating (Model $model): void
     {
         $mutator = new Mutator($this->auth, $this->config, $model, 'creating');
 
         $mutator->mutate();
     }
 
-    public function updating (Model $model)
+    public function updating (Model $model): void
     {
         $mutator = new Mutator($this->auth, $this->config, $model, 'updating');
 
         $mutator->mutate();
     }
 
-    public function deleting (Model $model)
+    public function deleting (Model $model): void
     {
         if ($this->usesSoftDeletes($model)) {
             $mutator = new Mutator($this->auth, $this->config, $model, 'deleting');
@@ -51,22 +51,8 @@ class Observer
         }
     }
 
-    private function usesSoftDeletes (Model $model)
+    private function usesSoftDeletes (Model $model): bool
     {
-        return in_array(SoftDeletes::class, $this->deepUse($model));
-    }
-
-    private function deepUse (Model $model) {
-        $traits = [];
-
-        do {
-            $traits = array_merge(class_uses($model), $traits);
-        } while ($model = get_parent_class($model));
-
-        foreach ($traits as $trait => $same) {
-            $traits = array_merge(class_uses($trait), $traits);
-        }
-
-        return array_unique($traits);
+        return in_array(SoftDeletes::class, class_uses_deep($model));
     }
 }
