@@ -43,7 +43,7 @@ If you set a value manually (eg `$model->created_at = 1`), the manually set valu
 
 ### Model trait
 
-You'll probably want relations, in which case you can use `BlameTrait` which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
+You'll probably want relations, in which case you can use `Relations` trait which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
 
 ### Blueprint Macro
 
