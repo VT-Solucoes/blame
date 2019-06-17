@@ -40,7 +40,7 @@ class Observer
         if ($this->usesSoftDeletes($model)) {
             $mutator = new Mutator($this->auth, $this->config, $model, 'deleting');
 
-            /**
+            /*
              * We need to prevent the model from firing an updated event when
              * calling save(), which would otherwise happen.
              */
