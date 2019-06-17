@@ -1,11 +1,4 @@
-[![Build Status](https://travis-ci.org/DeBoerTool/model-factory.svg?branch=master)](https://travis-ci.org/DeBoerTool/model-factory)
-[![Latest Stable Version](https://poser.pugx.org/dbt/model-factory/v/stable)](https://packagist.org/packages/dbt/model-factory)
-[![License](https://poser.pugx.org/dbt/model-factory/license)](https://packagist.org/packages/dbt/model-factory)
-
-
-# Class-based Model Factories for Laravel
-
-This package is alternative to keeping your model factories in plain PHP files. 
+# Automatic `created_by`, `updated_by`, and `deleted_by` model attributes.
 
 ## Getting Started
 ### Prerequisites
@@ -41,6 +34,10 @@ In your configuration file, add the models you wish to observe:
 ```
 
 You can also use the config file to customize the column names and swap out the observer if you wish.
+
+`deleted_at` will only be written if the given model uses Soft Deletes.
+
+There is also a `Blueprint` macro, `blameColumns` that you can use in your migrations.
 
 ### License
 
