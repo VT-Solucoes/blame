@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
  * @property mixed name
  * @property mixed deleted_by
  * @property \Dbt\Tests\Fixtures\UserFixture createdBy
+ * @property \Dbt\Tests\Fixtures\UserFixture updatedBy
+ * @property \Dbt\Tests\Fixtures\UserFixture deletedBy
  */
 class ModelFixture extends Model
 {

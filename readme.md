@@ -41,6 +41,10 @@ You can also use the config file to customize the column names and swap out the 
 
 If you set a value manually (eg `$model->created_at = 1`), the manually set value will be written to the database instead of the automatic value. This is useful for contexts where you don't have an authenticated user (eg when creating models via the console) and you with to hardcode a system user.
 
+### Model trait
+
+You'll probably want relations, in which case you can use `BlameTrait` which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
+
 ### Blueprint Macro
 
 There is also a `Blueprint` macro, `blameColumns` that you can use in your migrations.
