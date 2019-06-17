@@ -14,7 +14,7 @@ return [
      * automatically register the observer for you.
      */
     'models' => [
-        'Model references go here.',
+        // Model references go here, eg User::class
     ],
 
     /*
@@ -22,8 +22,8 @@ return [
      * associative array lists $eventName => $columnName.
      */
     'columns' => [
-        'creating' => 'created_at',
-        'updating' => 'updated_at',
-        'deleting' => 'deleted_at',
+        'creating' => 'created_by',
+        'updating' => 'updated_by',
+        'deleting' => 'deleted_by',
     ]
 ];

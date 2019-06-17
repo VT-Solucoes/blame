@@ -2,28 +2,25 @@
 
 namespace Dbt\Tests\Fixtures;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Str;
 
 /**
- * @property mixed created_by
- * @property mixed updated_by
- * @property mixed name
- * @property mixed deleted_by
+ * @property int id
  */
-class ModelFixture extends Model
+class UserFixture extends User
 {
-    use SoftDeletes;
-
-    protected $table = 'blame';
+    protected $table = 'user';
     protected $guarded = [];
 
     public static function make (): self
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return self::query()->create([
+            'id' => rand(1, 9999),
             'name' => Str::random(16),
+            'email' => Str::random(16),
+            'password' => Str::random(32),
         ]);
     }
 }

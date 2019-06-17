@@ -2,11 +2,10 @@
 
 namespace Dbt\Blame;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Observer
 {
@@ -38,11 +37,36 @@ class Observer
 
     public function deleting (Model $model)
     {
-        if (method_exists($model, 'bootSoftDelete')) {
+        if ($this->usesSoftDeletes($model)) {
             $mutator = new Mutator($this->auth, $this->config, $model, 'deleting');
 
-            $mutator->mutate();
-            $model->save();
+            /**
+             * We need to prevent the model from firing an updated event when
+             * calling save(), which would otherwise happen.
+             */
+            WithoutEvents::run(function () use ($mutator, $model) {
+                $mutator->mutate();
+                $model->save();
+            });
         }
+    }
+
+    private function usesSoftDeletes (Model $model)
+    {
+        return in_array(SoftDeletes::class, $this->deepUse($model));
+    }
+
+    private function deepUse (Model $model) {
+        $traits = [];
+
+        do {
+            $traits = array_merge(class_uses($model), $traits);
+        } while ($model = get_parent_class($model));
+
+        foreach ($traits as $trait => $same) {
+            $traits = array_merge(class_uses($trait), $traits);
+        }
+
+        return array_unique($traits);
     }
 }

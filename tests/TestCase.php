@@ -4,6 +4,7 @@ namespace Dbt\Tests;
 
 use Dbt\Blame\Provider;
 use Dbt\Tests\Fixtures\ModelFixture;
+use Dbt\Tests\Fixtures\UserFixture;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -20,14 +21,26 @@ abstract class TestCase extends Orchestra
             ->connection()
             ->getSchemaBuilder();
 
-        $this->withFactories(__DIR__ . '/../resources/factories');
-
         $this->migrateDatabase();
+    }
+
+    protected function beUser (): UserFixture
+    {
+        $user = UserFixture::make();
+
+        $this->be($user);
+
+        return $user;
+    }
+
+    protected function beAnotherUser (): UserFixture
+    {
+        return $this->beUser();
     }
 
     protected function getEnvironmentSetUp ($app): void
     {
-        $app['config']->set('m.classes', [
+        $app['config']->set('blame.models', [
             ModelFixture::class,
         ]);
 
@@ -50,6 +63,17 @@ abstract class TestCase extends Orchestra
         $this->schema->create('blame', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->blameColumns();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        $this->schema->create('user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
