@@ -44,7 +44,7 @@ class Observer
              * We need to prevent the model from firing an updated event when
              * calling save(), which would otherwise happen.
              */
-            WithoutEvents::run(function () use ($mutator, $model) {
+            Model::withoutEvents(function () use ($mutator, $model) {
                 $mutator->mutate();
                 $model->save();
             });
