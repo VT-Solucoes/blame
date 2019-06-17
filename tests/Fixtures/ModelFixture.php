@@ -2,7 +2,7 @@
 
 namespace Dbt\Tests\Fixtures;
 
-use Dbt\Blame\BlameRelations;
+use Dbt\Blame\Relations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  */
 class ModelFixture extends Model
 {
-    use SoftDeletes, BlameRelations;
+    use SoftDeletes, Relations;
 
     protected $table = 'blame';
     protected $guarded = [];

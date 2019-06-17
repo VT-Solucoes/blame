@@ -17,7 +17,8 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->schema = $this->app->make('db')
+        $this->schema = $this->app
+            ->make('db')
             ->connection()
             ->getSchemaBuilder();
 

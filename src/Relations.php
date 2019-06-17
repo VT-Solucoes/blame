@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
  */
-trait BlameRelations
+trait Relations
 {
     public function createdBy (): BelongsTo
     {
