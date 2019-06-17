@@ -10,6 +10,14 @@ return [
     'observer' => Observer::class,
 
     /*
+     * Add your authenticatable reference here. This is often \App\User::class.
+     */
+    'user' => [
+        'model' => \App\User::class,
+        'primary_key' => 'id'
+    ],
+
+    /*
      * Add each model you want observed to this array. The service provider will
      * automatically register the observer for you.
      */

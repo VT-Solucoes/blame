@@ -44,6 +44,8 @@ abstract class TestCase extends Orchestra
             ModelFixture::class,
         ]);
 
+        $app['config']->set('blame.user.model', UserFixture::class);
+
         $app['config']->set('app.debug', 'true');
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [

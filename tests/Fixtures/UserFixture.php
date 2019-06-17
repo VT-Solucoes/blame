@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property int id
+ * @property string name
  */
 class UserFixture extends User
 {
