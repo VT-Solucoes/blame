@@ -12,12 +12,10 @@ class Provider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/blame.php' => config_path('blame.php'),
         ], 'config');
+    }
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/blame.php',
-            'blame'
-        );
-
+    public function boot (): void
+    {
         $columns = $this->config('columns');
 
         Blueprint::macro('blameColumns', function () use ($columns) {
@@ -29,10 +27,7 @@ class Provider extends ServiceProvider
                 $this->unsignedBigInteger($column)->nullable();
             }
         });
-    }
 
-    public function boot (): void
-    {
         /** @var \Illuminate\Database\Eloquent\Model $model */
         foreach ($this->config('models') as $model) {
             $model::observe($this->config('observer'));

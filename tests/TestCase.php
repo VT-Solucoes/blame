@@ -2,6 +2,7 @@
 
 namespace Dbt\Tests;
 
+use Dbt\Blame\Observer;
 use Dbt\Blame\Provider;
 use Dbt\Tests\Fixtures\ModelFixture;
 use Dbt\Tests\Fixtures\UserFixture;
@@ -41,11 +42,21 @@ abstract class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp ($app): void
     {
-        $app['config']->set('blame.models', [
-            ModelFixture::class,
+        $app['config']->set('blame', [
+            'observer' => Observer::class,
+            'user' => [
+                'model' => UserFixture::class,
+                'primary_key' => 'id',
+            ],
+            'models' => [
+                ModelFixture::class,
+            ],
+            'columns' => [
+                'creating' => 'created_by',
+                'updating' => 'updated_by',
+                'deleting' => 'deleted_by',
+            ],
         ]);
-
-        $app['config']->set('blame.user.model', UserFixture::class);
 
         $app['config']->set('app.debug', 'true');
         $app['config']->set('database.default', 'testing');
