@@ -14,7 +14,8 @@ return [
      */
     'user' => [
         'model' => \App\User::class,
-        'primary_key' => 'id'
+        'primary_key' => 'id',
+        'default_id' => null,
     ],
 
     /*

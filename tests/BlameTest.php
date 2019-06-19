@@ -18,6 +18,23 @@ class BlameTest extends TestCase
     }
 
     /** @test */
+    public function creating_when_default_is_set ()
+    {
+        $model = ModelFixture::make();
+
+        $this->assertSame($this->getDefaultId(), $model->created_by);
+    }
+
+    /** @test */
+    public function creating_when_default_is_not_set ()
+    {
+        $this->unsetDefaultId();
+        $model = ModelFixture::make();
+
+        $this->assertNull($model->created_by);
+    }
+
+    /** @test */
     public function updating ()
     {
         $user1 = $this->beUser();
@@ -31,6 +48,29 @@ class BlameTest extends TestCase
 
         $this->assertSame($user1->id, $model->created_by);
         $this->assertSame($user2->id, $model->updated_by);
+    }
+
+    /** @test */
+    public function updating_when_default_is_set ()
+    {
+        $model = ModelFixture::make();
+
+        $model->name = Str::random(8);
+        $model->save();
+
+        $this->assertSame($this->getDefaultId(), $model->updated_by);
+    }
+
+    /** @test */
+    public function updating_when_default_is_not_set ()
+    {
+        $this->unsetDefaultId();
+        $model = ModelFixture::make();
+
+        $model->name = Str::random(8);
+        $model->save();
+
+        $this->assertNull($model->updated_by);
     }
 
     /** @test */
@@ -52,6 +92,27 @@ class BlameTest extends TestCase
         $this->assertSame($user1->id, $model->created_by);
         $this->assertSame($user2->id, $model->updated_by);
         $this->assertSame($user3->id, $model->deleted_by);
+    }
+
+    /** @test */
+    public function deleting_when_default_is_set ()
+    {
+        $model = ModelFixture::make();
+
+        $model->delete();
+
+        $this->assertSame($this->getDefaultId(), $model->deleted_by);
+    }
+
+    /** @test */
+    public function deleting_when_default_is_not_set ()
+    {
+        $this->unsetDefaultId();
+
+        $model = ModelFixture::make();
+        $model->delete();
+
+        $this->assertNull($model->deleted_by);
     }
 
     /** @test */

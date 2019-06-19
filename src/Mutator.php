@@ -30,9 +30,28 @@ class Mutator
 
     public function mutate (): void
     {
-        if ($this->shouldMutate()) {
-            $this->model->{$this->column()} = $this->auth->id();
+        if (!$this->shouldMutate()) {
+            return;
         }
+
+        $this->model->{$this->column()} = $this->getId();
+    }
+
+    private function getId (): ?int
+    {
+        return $this->getAuthId() ?? $this->defaultId();
+    }
+
+    private function getAuthId (): ?int
+    {
+        $id = $this->auth->id();
+
+        return $id ? (int) $id : null;
+    }
+
+    private function defaultId (): ?int
+    {
+        return $this->config->get('blame.user.default_id');
     }
 
     private function shouldMutate (): bool

@@ -47,6 +47,7 @@ abstract class TestCase extends Orchestra
             'user' => [
                 'model' => UserFixture::class,
                 'primary_key' => 'id',
+                'default_id' => $this->getDefaultId(),
             ],
             'models' => [
                 ModelFixture::class,
@@ -65,6 +66,16 @@ abstract class TestCase extends Orchestra
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+    }
+
+    protected function getDefaultId (): int
+    {
+        return 98765;
+    }
+
+    protected function unsetDefaultId (): void
+    {
+        $this->app['config']->set('blame.user.default_id', null);
     }
 
     protected function getPackageProviders ($app): array

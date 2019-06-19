@@ -37,15 +37,19 @@ You can also use the config file to customize the column names and swap out the 
 
 `deleted_at` will only be written if the given model uses Soft Deletes.
 
+### Default user id
+
+If you're mutating models in non-authenticated contexts and you wish to write a default user id on create, update, or delete, you can set the `blame.user.default_id` config key to an integer. By default this key is null. 
+
 ### Manual override
 
-If you set a value manually (eg `$model->created_at = 1`), the manually set value will be written to the database instead of the automatic value. This is useful for contexts where you don't have an authenticated user (eg when creating models via the console) and you with to hardcode a system user.
+If you set a value manually (eg `$model->created_at = 1`), this value will be written to the database instead of the automatic value. This is useful for contexts where you don't have an authenticated user (eg when creating models via the console) and you still wish to write an id.
 
 ### Model trait
 
 You'll probably want relations, in which case you can use `Relations` trait which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
 
-### Blueprint Macro
+### Blueprint macro
 
 There is also a `Blueprint` macro, `blameColumns` that you can use in your migrations.
 
