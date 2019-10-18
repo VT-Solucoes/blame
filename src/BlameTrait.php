@@ -2,13 +2,39 @@
 
 namespace Dbt\Blame;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
+ * @mixin \Dbt\Blame\BlameInterface
  */
 trait BlameTrait
 {
+    /** @var ?string */
+    private $creatingColumn = null;
+
+    /** @var ?string */
+    private $updatingColumn = null;
+
+    /** @var ?string */
+    private $deletingColumn = null;
+
+    public function getCreatedBy (): Model
+    {
+        return $this->createdBy;
+    }
+
+    public function getUpdatedBy (): Model
+    {
+        return $this->updatedBy;
+    }
+
+    public function getDeletedBy (): ?Model
+    {
+        return $this->deletedBy;
+    }
+
     public function createdBy (): BelongsTo
     {
         return $this->belongsTo(

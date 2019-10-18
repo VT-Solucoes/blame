@@ -2,6 +2,8 @@
 
 namespace Dbt\Tests\Fixtures;
 
+use Dbt\Blame\BlameInterface;
+use Dbt\Blame\BlameTrait;
 use Dbt\Blame\Relations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,9 +18,9 @@ use Illuminate\Support\Str;
  * @property \Dbt\Tests\Fixtures\UserFixture updatedBy
  * @property \Dbt\Tests\Fixtures\UserFixture deletedBy
  */
-class ModelFixture extends Model
+class ModelFixture extends Model implements BlameInterface
 {
-    use SoftDeletes, Relations;
+    use SoftDeletes, BlameTrait;
 
     protected $table = 'blame';
     protected $guarded = [];
