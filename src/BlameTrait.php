@@ -11,15 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 trait BlameTrait
 {
-    /** @var ?string */
-    private $creatingColumn = null;
-
-    /** @var ?string */
-    private $updatingColumn = null;
-
-    /** @var ?string */
-    private $deletingColumn = null;
-
     public function getCreatedBy (): Model
     {
         return $this->createdBy;
