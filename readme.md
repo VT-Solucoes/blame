@@ -28,9 +28,9 @@ Publish the `blame.php` configuration file with the `php artisan vendor:publish`
 In your configuration file, add the models you wish to observe:
 
 ```php
-    'models' => [
-        App\MyModel::class
-    ],
+'models' => [
+    App\MyModel::class
+],
 ```
 
 You can also use the config file to customize the column names and swap out the observer if you wish.
@@ -47,11 +47,19 @@ If you set a value manually (eg `$model->created_at = 1`), this value will be wr
 
 ### Model trait
 
-You'll probably want relations, in which case you can use `Relations` trait which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
+You'll probably want relations, in which case you can use `BlameTrait`, which provides `created_by`, `updated_by` and `deleted_by` relations. You can of course opt not to use this trait and define your own relation methods however you like.
 
 ### Blueprint macro
 
-There is also a `Blueprint` macro, `blameColumns` that you can use in your migrations.
+There is also a `Blueprint` macro, `blameColumns` that you can use in your migrations:
+
+```php
+Schema::create('myTable', function (Blueprint $table) {
+    $table->blameColumns();
+}
+```
+
+This macro will create the columns specified in your `blame.php` config file.
 
 ### License
 

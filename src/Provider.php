@@ -12,6 +12,11 @@ class Provider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/blame.php' => config_path('blame.php'),
         ], 'config');
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/blame.php',
+            'blame'
+        );
     }
 
     public function boot (): void

@@ -2,7 +2,6 @@
 
 namespace Dbt\Tests;
 
-use Dbt\Blame\Observer;
 use Dbt\Blame\Provider;
 use Dbt\Tests\Fixtures\ModelFixture;
 use Dbt\Tests\Fixtures\UserFixture;
@@ -42,26 +41,22 @@ abstract class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp ($app): void
     {
-        $app['config']->set('blame', [
-            'observer' => Observer::class,
-            'user' => [
-                'model' => UserFixture::class,
-                'primary_key' => 'id',
-                'default_id' => $this->getDefaultId(),
-            ],
-            'models' => [
-                ModelFixture::class,
-            ],
-            'columns' => [
-                'creating' => 'created_by',
-                'updating' => 'updated_by',
-                'deleting' => 'deleted_by',
-            ],
+        /** @var \Illuminate\Contracts\Config\Repository $config */
+        $config = $app['config'];
+
+        $config->set('blame.models', [
+            ModelFixture::class
         ]);
 
-        $app['config']->set('app.debug', 'true');
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing', [
+        $config->set('blame.user', [
+            'model' => UserFixture::class,
+            'primary_key' => 'id',
+            'default_id' => $this->getDefaultId(),
+        ]);
+
+        $config->set('app.debug', 'true');
+        $config->set('database.default', 'testing');
+        $config->set('database.connections.testing', [
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
@@ -80,7 +75,9 @@ abstract class TestCase extends Orchestra
 
     protected function getPackageProviders ($app): array
     {
-        return [Provider::class];
+        return [
+            Provider::class
+        ];
     }
 
     private function migrateDatabase (): void
