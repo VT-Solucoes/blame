@@ -39,11 +39,9 @@ class Provider extends ServiceProvider
         }
     }
 
-    /**
-     * @return mixed
-     */
-    private function config (string $key)
+    private function config (string $key): mixed
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         return $this->app->make('config')->get('blame.' . $key);
     }
 }

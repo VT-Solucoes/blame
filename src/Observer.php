@@ -9,17 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Observer
 {
-    /** @var \Illuminate\Config\Repository */
-    private $config;
 
-    /** @var \Illuminate\Contracts\Auth\Guard */
-    private $auth;
-
-    public function __construct (Guard $auth, Repository $config)
-    {
-        $this->config = $config;
-        $this->auth = $auth;
-    }
+    public function __construct (
+        private Guard $auth,
+        private Repository $config
+    ) {}
 
     public function creating (Model $model): void
     {

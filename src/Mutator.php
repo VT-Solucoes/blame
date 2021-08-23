@@ -8,25 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mutator
 {
-    /** @var \Illuminate\Database\Eloquent\Model */
-    private $model;
 
-    /** @var string */
-    private $event;
-
-    /** @var \Illuminate\Config\Repository */
-    private $config;
-
-    /** @var \Illuminate\Contracts\Auth\Guard */
-    private $auth;
-
-    public function __construct (Guard $auth, Repository $config, Model $model, string $event)
-    {
-        $this->model = $model;
-        $this->event = $event;
-        $this->config = $config;
-        $this->auth = $auth;
-    }
+    public function __construct (
+        private Guard $auth,
+        private Repository $config,
+        private Model $model,
+        private string $event
+    ) {}
 
     public function mutate (): void
     {
