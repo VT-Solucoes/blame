@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
     xmlns="https://getpsalm.org/schema/config"
 >
     <projectFiles>
@@ -30,7 +29,6 @@
         <MissingReturnType errorLevel="info" />
         <MissingPropertyType errorLevel="info" />
         <InvalidDocblock errorLevel="info" />
-        <MisplacedRequiredParam errorLevel="info" />
 
         <PropertyNotSetInConstructor errorLevel="info" />
         <MissingConstructor errorLevel="info" />
